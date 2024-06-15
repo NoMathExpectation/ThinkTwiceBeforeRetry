@@ -1,0 +1,4 @@
+TTBR_giveup_header=Hold On!
+TTBR_giveup_subheader=You are carrying something important. If you do this, your progress will be lost!
+TTBR_giveup_cancel=Cancel
+TTBR_setting_delay=Delay Before Confirm

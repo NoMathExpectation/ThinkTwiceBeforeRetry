@@ -1,0 +1,4 @@
+TTBR_giveup_header=等一下！
+TTBR_giveup_subheader=你正携带着重要的东西，如果你继续操作，你的进度将会丢失！
+TTBR_giveup_cancel=取消
+TTBR_setting_delay=确认前延时
