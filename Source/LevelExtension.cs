@@ -149,6 +149,11 @@ namespace NoMathExpectation.Celeste.ThinkTwiceBeforeRetry
             });
             menu.OnCancel = () =>
             {
+                if (cancelButton.Disabled)
+                {
+                    return;
+                }
+
                 Audio.Play("event:/ui/main/button_back");
                 menu.RemoveSelf();
                 level.Pause(returnIndex, minimal);
