@@ -168,6 +168,7 @@ namespace NoMathExpectation.Celeste.ThinkTwiceBeforeRetry
 
         private static void QuickRestartReplacement(this Level level, bool minimal = false)
         {
+            // hooked just before the original give up method
             if (level.PlayerHasImportantCollectible())
             {
                 level.GiveUpGolden(0, minimal, "menu_pause_restartarea".DialogClean(), menu =>
@@ -251,6 +252,7 @@ namespace NoMathExpectation.Celeste.ThinkTwiceBeforeRetry
                     button.Pressed(() =>
                     {
                         menu.RemoveSelf();
+                        level.PauseMainMenuOpen = false;
                         level.GiveUpGolden(menu.IndexOf(button), minimal, label, m2 =>
                         {
                             m2.RemoveSelf();
@@ -266,9 +268,10 @@ namespace NoMathExpectation.Celeste.ThinkTwiceBeforeRetry
                     button.Pressed(() =>
                     {
                         menu.RemoveSelf();
+                        level.PauseMainMenuOpen = false;
                         level.GiveUpGolden(menu.IndexOf(button), minimal, label, m2 =>
                         {
-                            m2.RemoveSelf();
+                            m2.Focused = false;
                             origPressed();
                         });
                     });
@@ -280,6 +283,7 @@ namespace NoMathExpectation.Celeste.ThinkTwiceBeforeRetry
                     button.Pressed(() =>
                     {
                         menu.RemoveSelf();
+                        level.PauseMainMenuOpen = false;
                         level.GiveUpGolden(menu.IndexOf(button), minimal, label, m2 =>
                         {
                             m2.Focused = false;
@@ -294,6 +298,7 @@ namespace NoMathExpectation.Celeste.ThinkTwiceBeforeRetry
                     button.Pressed(() =>
                     {
                         menu.RemoveSelf();
+                        level.PauseMainMenuOpen = false;
                         level.GiveUpGolden(menu.IndexOf(button), minimal, label, m2 =>
                         {
                             m2.Focused = false;
