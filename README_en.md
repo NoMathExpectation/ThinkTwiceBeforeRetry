@@ -7,4 +7,8 @@ This prevents you from accident pressing "retry", "save and quit", or something 
 
 Optionally, in the mod settings, you can configure the delay before you can confirm.
 
+Demo：https://b23.tv/BV12fVnecEWU
+
+Gamebanana：https://gamebanana.com/mods/521997
+
 ![demo](demo_en.png)
