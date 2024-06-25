@@ -1,5 +1,4 @@
 ﻿using Celeste;
-using System;
 using System.Linq;
 
 namespace NoMathExpectation.Celeste.ThinkTwiceBeforeRetry
@@ -10,14 +9,14 @@ namespace NoMathExpectation.Celeste.ThinkTwiceBeforeRetry
         {
             return player.Leader.Followers.Any(follower =>
             {
-                var entity = follower.Entity;
+                var entity = follower?.Entity;
+                if (entity == null)
+                {
+                    return false;
+                }
                 if (entity is Strawberry strawberry)
                 {
                     return strawberry.Golden;
-                }
-                if (Type.GetType("Celeste.Mod.CollabUtils2.Entities.SilverBerry").IsInstanceOfType(entity))
-                {
-                    return true;
                 }
                 return false;
             });
