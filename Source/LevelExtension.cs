@@ -326,6 +326,38 @@ namespace NoMathExpectation.Celeste.ThinkTwiceBeforeRetry
                     });
                     continue;
                 }
+
+                if (label == "collabutils2_returntolobby".DialogCleanOrNull())
+                {
+                    var origPressed = button.OnPressed;
+                    button.Pressed(() =>
+                    {
+                        menu.RemoveSelf();
+                        level.PauseMainMenuOpen = false;
+                        level.GiveUpGolden(menu.IndexOf(button), minimal, label, m2 =>
+                        {
+                            m2.RemoveSelf();
+                            origPressed();
+                        });
+                    });
+                    continue;
+                }
+
+                if (label == "collabutils2_restartspeedberry".DialogCleanOrNull())
+                {
+                    var origPressed = button.OnPressed;
+                    button.Pressed(() =>
+                    {
+                        menu.RemoveSelf();
+                        level.PauseMainMenuOpen = false;
+                        level.GiveUpGolden(menu.IndexOf(button), minimal, label, m2 =>
+                        {
+                            m2.RemoveSelf();
+                            origPressed();
+                        });
+                    });
+                    continue;
+                }
             }
         }
 
