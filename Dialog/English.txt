@@ -1,4 +1,10 @@
 TTBR_giveup_header=Hold On!
 TTBR_giveup_subheader=You are carrying something important. If you do this, your progress will be lost!
+TTBR_giveup_subheader_no_important=Are you sure to continue?
 TTBR_giveup_cancel=Cancel
+
+TTBR_setting_menu_enable_type=Enable Confirm Menu
+modoptions_thinktwicebeforeretrymodule_enabletype_ALWAYS_DISABLED=Always Disabled
+modoptions_thinktwicebeforeretrymodule_enabletype_IMPORTANT_CARRIED=On Golden/Silver Run
+modoptions_thinktwicebeforeretrymodule_enabletype_ALWAYS_ENABLED=Always Enabled
 TTBR_setting_delay=Delay Before Confirm

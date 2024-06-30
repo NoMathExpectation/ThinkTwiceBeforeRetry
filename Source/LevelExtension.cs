@@ -102,9 +102,20 @@ namespace NoMathExpectation.Celeste.ThinkTwiceBeforeRetry
             menu.Position = new Vector2(Engine.Width / 2f, Engine.Height / 2f - 100f);
 
             var header = new TextMenu.Header("TTBR_giveup_header".DialogClean());
-            var subHeader = new TextMenu.SubHeader("TTBR_giveup_subheader".DialogClean());
             menu.Add(header);
-            menu.Add(subHeader);
+
+            if (level.PlayerHasImportantCollectible())
+            {
+                var subHeader = new TextMenu.SubHeader("TTBR_giveup_subheader".DialogClean());
+                menu.Add(subHeader);
+            }
+            else
+            {
+                var subHeader = new TextMenu.SubHeader("TTBR_giveup_subheader_no_important".DialogClean());
+                menu.Add(subHeader);
+            }
+
+
 
             var cancelButton = new TextMenu.Button("TTBR_giveup_cancel".DialogClean());
             cancelButton.Pressed(() =>
@@ -163,13 +174,21 @@ namespace NoMathExpectation.Celeste.ThinkTwiceBeforeRetry
 
         public static bool PlayerHasImportantCollectible(this Level level)
         {
-            return level.Tracker.GetEntity<Player>().HasImportantCollectible();
+            return level?.Tracker?.GetEntity<Player>()?.HasImportantCollectible() == true;
         }
+
+        public static bool NeedsToShowConfirmMenu(this Level level) => ThinkTwiceBeforeRetryModule.Settings.EnableType switch
+        {
+            ThinkTwiceBeforeRetryModuleSettings.MenuEnableType.ALWAYS_DISABLED => false,
+            ThinkTwiceBeforeRetryModuleSettings.MenuEnableType.IMPORTANT_CARRIED => level.PlayerHasImportantCollectible(),
+            ThinkTwiceBeforeRetryModuleSettings.MenuEnableType.ALWAYS_ENABLED => true,
+            _ => false,
+        };
 
         private static void QuickRestartReplacement(this Level level, bool minimal = false)
         {
             // hooked just before the original give up method
-            if (level.PlayerHasImportantCollectible())
+            if (level.NeedsToShowConfirmMenu())
             {
                 level.GiveUpGolden(0, minimal, "menu_pause_restartarea".DialogClean(), menu =>
                 {
@@ -236,9 +255,9 @@ namespace NoMathExpectation.Celeste.ThinkTwiceBeforeRetry
             }
         }
 
-        private static void OnCreatePauseMenuButtons(Level level, TextMenu menu, bool minimal)
+        private static void AfterCreatePauseMenuButtons(Level level, TextMenu menu, bool minimal)
         {
-            if (!level.PlayerHasImportantCollectible())
+            if (!level.NeedsToShowConfirmMenu())
             {
                 return;
             }
@@ -310,17 +329,33 @@ namespace NoMathExpectation.Celeste.ThinkTwiceBeforeRetry
             }
         }
 
+        private static ILHook afterCreatePauseMenuButtonsHook = null;
+        private static void ModLevelPause(ILContext il)
+        {
+            // hook after CreatePauseMenuButtons
+            var cursor = new ILCursor(il);
+
+            if (cursor.TryGotoNext(MoveType.After, instr => instr.MatchCall(typeof(Everest.Events.Level), "CreatePauseMenuButtons")))
+            {
+                cursor.EmitLdarg0();
+                cursor.EmitLdloc0();
+                cursor.EmitLdarg2();
+                cursor.EmitDelegate(AfterCreatePauseMenuButtons);
+            }
+        }
+
         internal static void Hook()
         {
             levelOrigPauseHook = new ILHook(typeof(Level).GetMethod("orig_Pause"), ModLevelOrigPause);
-            Everest.Events.Level.OnCreatePauseMenuButtons += OnCreatePauseMenuButtons;
+            afterCreatePauseMenuButtonsHook = new ILHook(typeof(Level).GetMethod("Pause"), ModLevelPause);
         }
 
         internal static void Unhook()
         {
             levelOrigPauseHook?.Dispose();
             levelOrigPauseHook = null;
-            Everest.Events.Level.OnCreatePauseMenuButtons -= OnCreatePauseMenuButtons;
+            afterCreatePauseMenuButtonsHook?.Dispose();
+            afterCreatePauseMenuButtonsHook = null;
         }
     }
 }

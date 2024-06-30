@@ -1,4 +1,10 @@
 TTBR_giveup_header=等一下！
 TTBR_giveup_subheader=你正携带着重要的东西，如果你继续操作，你的进度将会丢失！
+TTBR_giveup_subheader_no_important=你确定要继续吗？
 TTBR_giveup_cancel=取消
+
+TTBR_setting_menu_enable_type=启用确认菜单
+modoptions_thinktwicebeforeretrymodule_enabletype_ALWAYS_DISABLED=总是关闭
+modoptions_thinktwicebeforeretrymodule_enabletype_IMPORTANT_CARRIED=携带金/银草莓时
+modoptions_thinktwicebeforeretrymodule_enabletype_ALWAYS_ENABLED=总是开启
 TTBR_setting_delay=确认前延时
