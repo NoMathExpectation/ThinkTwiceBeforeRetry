@@ -94,6 +94,7 @@ namespace NoMathExpectation.Celeste.ThinkTwiceBeforeRetry
         public static void GiveUpGolden(this Level level, int returnIndex, bool minimal, string operation, Action<TextMenu> onConfirm, float? delay0 = null, float cancelDelay = 0f)
         {
             var delay = delay0 ?? ThinkTwiceBeforeRetryModule.Settings.DefaultDelay;
+            delay = Math.Max(delay, cancelDelay);
 
             level.Paused = true;
 
