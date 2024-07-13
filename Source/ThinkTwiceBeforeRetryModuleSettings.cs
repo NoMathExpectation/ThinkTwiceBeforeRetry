@@ -13,10 +13,12 @@ public class ThinkTwiceBeforeRetryModuleSettings : EverestModuleSettings
     public MenuEnableType EnableType { get; set; } = MenuEnableType.IMPORTANT_CARRIED;
 
     [SettingName("TTBR_setting_delay")]
+    [SettingSubText("TTBR_setting_delay_description")]
     [SettingRange(0, 10)]
     public int DefaultDelay { get; set; } = 3;
 
     [SettingName("TTBR_setting_cancel_delay")]
+    [SettingSubText("TTBR_setting_cancel_delay_description")]
     [SettingRange(0, 10)]
     public int CancelDelay { get; set; } = 1;
 }

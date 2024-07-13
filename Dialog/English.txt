@@ -8,4 +8,8 @@ modoptions_thinktwicebeforeretrymodule_enabletype_ALWAYS_DISABLED=Always Disable
 modoptions_thinktwicebeforeretrymodule_enabletype_IMPORTANT_CARRIED=On Golden/Silver Run
 modoptions_thinktwicebeforeretrymodule_enabletype_ALWAYS_ENABLED=Always Enabled
 TTBR_setting_delay=Delay Before Confirm
+TTBR_setting_delay_description=The delay before you can press the confirm button in seconds.
+The actual confirm delay is always no shorter than the actual cancel delay.
 TTBR_setting_cancel_delay=Delay Before Cancel
+TTBR_setting_cancel_delay_description=The delay before you can press the cancel button in seconds.
+This is only used in quick restart chapter confirm menu.
