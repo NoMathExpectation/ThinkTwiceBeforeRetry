@@ -1,5 +1,5 @@
 - Name: ThinkTwiceBeforeRetry
-  Version: 0.2.0
+  Version: 0.2.1
   DLL: bin/ThinkTwiceBeforeRetry.dll
   Dependencies:
     - Name: EverestCore

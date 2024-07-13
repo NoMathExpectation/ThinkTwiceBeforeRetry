@@ -195,7 +195,7 @@ namespace NoMathExpectation.Celeste.ThinkTwiceBeforeRetry
                 {
                     menu.Focused = false;
                     level.RestartLevel();
-                }, cancelDelay: 1f);
+                }, cancelDelay: ThinkTwiceBeforeRetryModule.Settings.CancelDelay);
             }
             else
             {

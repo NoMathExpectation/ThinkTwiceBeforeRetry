@@ -15,4 +15,8 @@ public class ThinkTwiceBeforeRetryModuleSettings : EverestModuleSettings
     [SettingName("TTBR_setting_delay")]
     [SettingRange(0, 10)]
     public int DefaultDelay { get; set; } = 3;
+
+    [SettingName("TTBR_setting_cancel_delay")]
+    [SettingRange(0, 10)]
+    public int CancelDelay { get; set; } = 1;
 }
