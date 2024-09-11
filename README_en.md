@@ -1,11 +1,11 @@
 # ThinkTwiceBeforeRetry
 [中文](README.md)
 
-This is a Celeste mod that adds extra confirmation and delay on some options in the pause menu when carrying an golden berry or silver berry.
+This is a Celeste mod that adds extra confirmation and delay on some options in the pause menu when carrying an golden berry, silver berry or something similar.
 
 This prevents you from accident pressing "retry", "save and quit", or something similar when adjusting settings during an golden/silver run.
 
-Optionally, in the mod settings, you can configure the delay before you can confirm.
+Optionally, in the mod settings, you can configure the delay before you can confirm and when to enable confirm menu.
 
 Demo：https://b23.tv/BV12fVnecEWU
 
