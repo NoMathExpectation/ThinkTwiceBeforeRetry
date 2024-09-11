@@ -1,4 +1,6 @@
 ﻿using Celeste;
+using Celeste.Mod;
+using MonoMod.Utils;
 using System.Linq;
 
 namespace NoMathExpectation.Celeste.ThinkTwiceBeforeRetry
@@ -17,6 +19,13 @@ namespace NoMathExpectation.Celeste.ThinkTwiceBeforeRetry
                 if (entity is Strawberry strawberry)
                 {
                     return strawberry.Golden;
+                }
+                if (entity is IStrawberry)
+                {
+                    var data = DynamicData.For(entity);
+                    bool? golden = false;
+                    var result = data.TryGet("Golden", out golden);
+                    return result && (golden == true);
                 }
                 return false;
             });
