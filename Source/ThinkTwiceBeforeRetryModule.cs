@@ -31,10 +31,14 @@ public class ThinkTwiceBeforeRetryModule : EverestModule
     public override void Load()
     {
         LevelExtension.Hook();
+        CommandsExtension.Hook();
+        SpeedrunToolHooks.Hook();
     }
 
     public override void Unload()
     {
         LevelExtension.Unhook();
+        CommandsExtension.Unhook();
+        SpeedrunToolHooks.Unhook();
     }
 }

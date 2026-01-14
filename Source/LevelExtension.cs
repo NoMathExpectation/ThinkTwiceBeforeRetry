@@ -15,7 +15,9 @@ namespace NoMathExpectation.Celeste.ThinkTwiceBeforeRetry
     {
         private static void EndLevel(this Level level)
         {
+#pragma warning disable CS0618
             Engine.TimeRate = 1f;
+#pragma warning restore CS0618
             level.Session.InArea = false;
             Audio.SetMusic(null);
             Audio.BusStopAll("bus:/gameplay_sfx", immediate: true);
@@ -34,7 +36,9 @@ namespace NoMathExpectation.Celeste.ThinkTwiceBeforeRetry
 
         private static void RestartLevel(this Level level)
         {
+#pragma warning disable CS0618
             Engine.TimeRate = 1f;
+#pragma warning restore CS0618
             level.Session.InArea = false;
             Audio.SetMusic(null);
             Audio.BusStopAll("bus:/gameplay_sfx", immediate: true);
@@ -56,7 +60,9 @@ namespace NoMathExpectation.Celeste.ThinkTwiceBeforeRetry
             Player player = level.Tracker.GetEntity<Player>();
             if (player != null && !player.Dead)
             {
+#pragma warning disable CS0618
                 Engine.TimeRate = 1f;
+#pragma warning restore CS0618
                 Distort.GameRate = 1f;
                 Distort.Anxiety = 0f;
                 level.InCutscene = (level.SkippingCutscene = false);
@@ -254,6 +260,10 @@ namespace NoMathExpectation.Celeste.ThinkTwiceBeforeRetry
                 cursor.EmitDelegate(QuickRestartReplacement);
                 cursor.EmitRet();
             }
+            else
+            {
+                Logger.Error("TTBR", "Cannot find hook point for IsLevelOrigPauseHookPoint!");
+            }
         }
 
         private static void AfterCreatePauseMenuButtons(Level level, TextMenu menu, bool minimal)
@@ -375,12 +385,44 @@ namespace NoMathExpectation.Celeste.ThinkTwiceBeforeRetry
                 cursor.EmitLdarg2();
                 cursor.EmitDelegate(AfterCreatePauseMenuButtons);
             }
+            else
+            {
+                Logger.Error("TTBR", "Cannot find hook point CreatePauseMenuButtons!");
+            }
+        }
+
+        private static ILHook levelUpdateHook = null;
+        private static void ModLevelUpdate(ILContext il)
+        {
+            var cursor = new ILCursor(il);
+
+            if (cursor.TryGotoNext(MoveType.AfterLabel, instr => instr.MatchLdsfld<global::Celeste.Celeste>("PlayMode")))
+            {
+                var cursor2 = cursor.Clone();
+                if (cursor2.TryGotoNext(MoveType.Before, instr => instr.MatchCall(typeof(Everest.Events.Level), "AfterUpdate")))
+                {
+                    cursor2.Index--;
+                    var jumpLabel = cursor2.MarkLabel();
+
+                    cursor.EmitDelegate(ThinkTwiceBeforeRetryModuleSettings.ShouldDisableDebug);
+                    cursor.EmitBrtrue(jumpLabel);
+                }
+                else
+                {
+                    Logger.Error("TTBR", "Cannot find hook point AfterUpdate!");
+                }
+            }
+            else
+            {
+                Logger.Error("TTBR", "Cannot find hook point PlayMode!");
+            }
         }
 
         internal static void Hook()
         {
             levelOrigPauseHook = new ILHook(typeof(Level).GetMethod("orig_Pause"), ModLevelOrigPause);
             afterCreatePauseMenuButtonsHook = new ILHook(typeof(Level).GetMethod("Pause"), ModLevelPause);
+            levelUpdateHook = new ILHook(typeof(Level).GetMethod("Update"), ModLevelUpdate);
         }
 
         internal static void Unhook()
@@ -389,6 +431,8 @@ namespace NoMathExpectation.Celeste.ThinkTwiceBeforeRetry
             levelOrigPauseHook = null;
             afterCreatePauseMenuButtonsHook?.Dispose();
             afterCreatePauseMenuButtonsHook = null;
+            levelUpdateHook?.Dispose();
+            levelUpdateHook = null;
         }
     }
 }
