@@ -4,15 +4,17 @@ TTBR_giveup_subheader_no_important=Are you sure to continue?
 TTBR_giveup_cancel=Cancel
 
 TTBR_setting_menu_enable_type=Enable Confirm Menu
-TTBR_setting_menu_enable_type_description=Adds confirm menu for some options in the pause menu and quick restart chapter.
+TTBR_setting_menu_enable_type_description=Added secondary confirmation for some options.
 modoptions_thinktwicebeforeretrymodule_enabletype_ALWAYS_DISABLED=Always Disabled
 modoptions_thinktwicebeforeretrymodule_enabletype_IMPORTANT_CARRIED=On Golden/Silver Run
 modoptions_thinktwicebeforeretrymodule_enabletype_ALWAYS_ENABLED=Always Enabled
 TTBR_setting_disable_debug=Disable Debug
-TTBR_setting_disable_debug_description=Disables debug buttons and console on golden/silver run.
-TTBR_setting_delay=Delay Before Confirm
-TTBR_setting_delay_description=The delay before you can press the confirm button in seconds.
-The actual confirm delay is always no shorter than the actual cancel delay.
-TTBR_setting_cancel_delay=Delay Before Cancel
-TTBR_setting_cancel_delay_description=The delay before you can press the cancel button in seconds.
-This is only used in quick restart chapter confirm menu.
+TTBR_setting_disable_debug_description=Disable Debug Map and Debug Console on golden/silver run.
+TTBR_setting_delay=Confirmation Delay
+TTBR_setting_delay_description=
+    Number of seconds to wait before confirm.
+    It will not be shorter than the Cancellation Delay.
+TTBR_setting_cancel_delay=Cancellation Delay
+TTBR_setting_cancel_delay_description=
+    Number of seconds to wait before cancel.
+    Only works when pressing Quick Restart button.
